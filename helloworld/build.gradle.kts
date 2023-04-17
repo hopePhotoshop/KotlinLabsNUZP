@@ -1,27 +1,32 @@
-plugins {
-    kotlin("jvm") version "1.8.0"
-    application
-}
+ plugins {
+     kotlin("jvm") version Versions.kotlin
+     id("org.jetbrains.compose") version Versions.compose
+     application
+     }
 
-group = "me.photoshop"
-version = "1.0-SNAPSHOT"
+ group = "org.example"
+ version = "1.0-SNAPSHOT"
 
 repositories {
-    mavenCentral()
-}
+     mavenCentral()
+     maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+     maven("file://${rootDir}/.m2repo/")
+    }
 
 dependencies {
-    testImplementation(kotlin("test"))
-}
+     implementation(Versions.library)
+     implementation(compose.desktop.currentOs)
+     testImplementation(kotlin("test"))
+    }
 
 tasks.test {
-    useJUnitPlatform()
-}
+     useJUnitPlatform()
+    }
 
 kotlin {
-    jvmToolchain(11)
-}
+    jvmToolchain(Versions.jvmLevel)
+    }
 
 application {
-    mainClass.set("MainKt")
-}
+     mainClass.set("MainKt")
+    }
