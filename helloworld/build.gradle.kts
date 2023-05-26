@@ -1,32 +1,32 @@
- plugins {
-     kotlin("jvm") version Versions.kotlin
-     id("org.jetbrains.compose") version Versions.compose
-     application
-     }
+plugins {
+    kotlin("jvm") version "1.8.0"
+    id("org.jetbrains.compose") version "1.3.0"
+    application
+}
 
- group = "org.example"
- version = "1.0-SNAPSHOT"
+group = "me.user"
+version = "1.0-SNAPSHOT"
 
 repositories {
-     mavenCentral()
-     maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
-     maven("file://${rootDir}/.m2repo/")
-    }
+    mavenCentral()
+    maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+    maven("file://${rootDir}/.m2repo/")
+}
 
 dependencies {
-     implementation(Versions.library)
-     implementation(compose.desktop.currentOs)
-     testImplementation(kotlin("test"))
-    }
+    testImplementation(kotlin("test"))
+    implementation("com.diacht.ktest:library:1.0.6")
+    implementation(compose.desktop.currentOs)
+}
 
 tasks.test {
-     useJUnitPlatform()
-    }
+    useJUnitPlatform()
+}
 
 kotlin {
-    jvmToolchain(Versions.jvmLevel)
-    }
+    jvmToolchain(17)
+}
 
 application {
-     mainClass.set("MainKt")
-    }
+    mainClass.set("MainKt")
+}

@@ -18,29 +18,29 @@ fun dCalculate(x0: Double= -1.74, x1: Double= -34.65, x2:Double= 17.6, x3: Doubl
     val result2 = tan(x0*x1*x2*x3*x4)
     return(result2)
 }
-fun strCalculate(x0: String = "ATGCJ", x1: String = "ATGCJ"):
+fun strCalculate(x0: String = "TCAGTAJCTJ", x1: String = "TCAGTAJJTJ"):
         Int {
     require(x0.length == x1.length) {
     }
-    var result3 = 0
-    for (i in x0.indices step 2) {
-        val symbol1 = x0[i]
-        val symbol2 = x1[i]
-        if (symbol1 == symbol2 || (symbol1 == 'T' && symbol2 == 'J') || (symbol1 == 'J' && symbol2 == 'T')) {
-        } else {
-            result3++
+    var result = 0
+    for (i in x0.indices step 2) { // Цикл для проходження по рядку
+        if (x0[i] != x1[i]) { // Порівняння символу першої строки з відповідним символом другої
+            if ((x0[i] != 'T' && x0[i] != 'J') && (x1[i] != 'T' && x1[i] != 'J')) {
+                result++
+
+            }
         }
     }
-    return (result3)
-            }
+    return(result)
 
+}
     fun main(args: Array<String>) {
         println("Лабораторна робота №${labNumber()} користувача ${seed()}")
-        startTestUi(seed(),
-            labNumber(),)
         iCalculate()
         dCalculate()
 strCalculate()
+        startTestUi(seed(),
+            labNumber(),)
     }
 
 
