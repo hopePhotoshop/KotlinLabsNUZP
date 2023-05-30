@@ -1,4 +1,8 @@
 import com.diacht.ktest.compose.startTestUi
+import kotlinx.coroutines.*
+import java.lang.Math.pow
+import java.net.URL
+import kotlin.math.cbrt
 import kotlin.math.pow
 import kotlin.math.sin
 import kotlin.math.tan
@@ -6,7 +10,7 @@ import kotlin.math.tan
 
 fun seed(): String = "hopePhotoshop"
 
-fun labNumber() : Int = 2
+fun labNumber() : Int = 4
 fun iCalculate(x0: Int = 83, x1: Int = -109, x2: Int = 91, x3: Int = -49, x4: Int = 27):
 Double {
     val result = sin(x0.toDouble().pow(2) + x1.toDouble().pow(2) + x2.toDouble().pow(2) + x3.toDouble().pow(2) + x4.toDouble().pow(2))
@@ -34,13 +38,35 @@ fun strCalculate(x0: String = "TCAGTAJCTJ", x1: String = "TCAGTAJJTJ"):
     return(result)
 
 }
-    fun main(args: Array<String>) {
-        println("Лабораторна робота №${labNumber()} користувача ${seed()}")
-        iCalculate()
-        dCalculate()
-strCalculate()
-        startTestUi(seed(),
-            labNumber(),)
+
+suspend fun getNumberFromServer(s: String): Int {
+    return withContext(Dispatchers.IO) {
+        val url = URL("http://diacht.2vsoft.com/api/send-number?message=" + s)
+        val connection = url.openConnection()
+        connection.connect()
+        val input = connection.getInputStream()
+        val buffer = ByteArray(128)
+        val bytesRead = input.read(buffer)
+        input.close()
+        String(buffer, 0, bytesRead).toInt()
     }
+}
 
+suspend fun serverDataCalculate(strList: List<String>) : Double = runBlocking {
+    var result : Double = 0.0;
+    val deferredList = strList.mapIndexed { index, element ->
+        async {
+            var number = getNumberFromServer(element).toDouble()
+   pow(number,3.0)
 
+        }
+    }
+    val numbers = deferredList.awaitAll()
+    result = cbrt(numbers.sum())
+println(result)
+    return@runBlocking result;
+}
+    suspend fun main(args: Array<String>) {
+        println("Лабораторна робота №${labNumber()} користувача ${seed()}")
+        startTestUi(seed(),labNumber())
+    }
