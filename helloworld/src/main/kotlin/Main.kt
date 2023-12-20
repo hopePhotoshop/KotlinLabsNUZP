@@ -19,7 +19,7 @@ fun dCalculate(x0: Double= -1.74, x1: Double= -34.65, x2:Double= 17.6, x3: Doubl
     val result2 = tan(x0*x1*x2*x3*x4)
     return(result2)
 }
-fun strCalculate(x0: String = "ATGCJJTATG", x1: String = "GTGCJTJATG"): Int {
+fun strCalculate(x0: String = "ATCCCTAJ", x1: String = "JATCCTAJ"): Int {
     require(x0.length == x1.length) {
     }
 
@@ -29,15 +29,14 @@ fun strCalculate(x0: String = "ATGCJJTATG", x1: String = "GTGCJTJATG"): Int {
             result++
         }
     }
-
+println(result)
     return result
 }
 
 fun main(args: Array<String>) {
         println("Лабораторна робота №${labNumber()} користувача ${seed()}")
-        startTestUi(seed(),labNumber())
-        strCalculate()
-        dCalculate()
-        iCalculate()
-
+    strCalculate()
+    dCalculate()
+    iCalculate()
+    startTestUi(seed(),labNumber())
     }
